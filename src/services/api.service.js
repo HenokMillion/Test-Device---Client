@@ -52,13 +52,13 @@ export const checkinDevice = (params) => {
 }
 
 export const submitDeviceReview = (params) => {
-    params = { device: params, user: getAuthUser(), review: params.review }
+    const _params = { device: params.device, user: getAuthUser(), review: params.review }
     return fetch(apiURL + 'device/review/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(params)
+        body: JSON.stringify(_params)
     })
         .then(resp => resp.json())
         .catch(err => err)
