@@ -12,15 +12,18 @@ function classNames(...classes) {
 export default function Header(props) {
     const [authenticatedUser, setAuthenticatedUser] = useState(null)
     const [showMobileMenu, setShowMobileMenu] = useState(false)
-    const authUser = getAuthUser()
-    const isAdmin = authUser.role === 'admin'
+    const [isAdmin, setIsAdmin] = useState(false)
+    const history = useHistory();
 
     useEffect(() => {
         if (!authenticatedUser) {
             setAuthenticatedUser(getAuthUser())
+        } else {
+            if (authenticatedUser.role === 'admin') {
+                setIsAdmin(true)
+            }
         }
-    })
-    const history = useHistory();
+    }, [authenticatedUser])
 
 
     const handleSignOut = () => {
@@ -52,11 +55,7 @@ export default function Header(props) {
                                 <button type="button" class="text-gray-500 group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-expanded="false">
                                     <span>Test Devices</span>
                                 </button>
-                            </div></Link>
-                        <Link to='/'>
-                            <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
-                                My Devices
-                            </a>
+                            </div>
                         </Link>
                         {
                             isAdmin ?
@@ -143,11 +142,6 @@ export default function Header(props) {
                             <Link to='/'>
                                 <a class="text-base font-medium text-gray-900 hover:text-gray-700">
                                     Test Devices
-                                </a>
-                            </Link>
-                            <Link to='/'>
-                                <a class="text-base font-medium text-gray-900 hover:text-gray-700">
-                                    My Devices
                                 </a>
                             </Link>
                             {

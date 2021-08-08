@@ -75,7 +75,10 @@ export default function DeviceDrawer(props) {
         setSubmittingReview(true)
         setSubmitReviewSuccess(false)
         setSubmitReviewError(false)
-        submitDeviceReview(review)
+        submitDeviceReview({
+            review,
+            device
+        })
             .then(success => {
                 const _device = device
                 if (_device.reviews) {
@@ -194,7 +197,7 @@ export default function DeviceDrawer(props) {
                                         <textarea onChange={e => setReview(e.target.value)} className="bg-gray-50 p-1 border-2 flex w-full h-20"></textarea>
                                     </div>
                                     <div className="flex flex-wrap justify-end align-end w-full">
-                                        <button className="sm:w-full mt-3 lg:w-1/4 border-gray-500 text-sm border-2 shadow-sm px-2 py-1 rounded-lg"
+                                        <button className="sm:w-full mt-3 lg:w-1/3 border-gray-500 text-sm border-2 shadow-sm px-2 py-1 rounded-lg"
                                             onClick={submitReview}>
                                             {submittingReview ? '...' : 'SUBMIT'}
                                         </button>

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { listUsers } from "../../services/api.service"
+import { getAuthUser } from "../../services/auth.service";
 import AddUser from "../add-user";
 import DeviceDrawer from "../device-drawer";
 
@@ -10,6 +12,7 @@ export default function UsersTable(props) {
     const [showDrawer, setShowDrawer] = useState(false)
     const [user, setUser] = useState(null)
     const [showUpdateDialog, setShowUpdateDialog] = useState(null)
+    const history = useHistory()
 
     const fetchUsers = () => {
         setLoadingUsers(true)
@@ -26,6 +29,9 @@ export default function UsersTable(props) {
 
     useEffect(() => {
         fetchUsers()
+        if (getAuthUser().role !== 'admin') {
+            history.push('/')
+        }
     }, [users, loadedUsers, loadingUsers])
 
     const handleUserRowClick = (user) => {
